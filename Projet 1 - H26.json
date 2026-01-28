@@ -1,0 +1,16 @@
+{ "class": "GraphLinksModel",
+  "nodeDataArray": [
+{"category":"Start","step":"0","text":"Waiting for init","key":-1,"location":"100 50"},
+{"location":"100 100","key":-2,"step":"1","text":"Ok for start"},
+{"location":"100 150","key":-3,"step":"2","text":"Emit part"},
+{"category":"Exclusive","location":"350 200","key":-4,"size":"600 0"},
+{"location":"100 250","key":-5,"step":"1.1","text":"| 1.1 |"},
+{"location":"550 250","key":-6}
+],
+  "linkDataArray": [
+{"from":-1,"to":-2,"text":"Tr0_1 : Init pressed"},
+{"from":-2,"to":-3,"text":"Tr0_1 : Start pressed"},
+{"from":-3,"to":-4},
+{"from":-4,"to":-5,"text":"Tr2_1.3 : Vision : lid"},
+{"from":-4,"to":-6,"text":"c"}
+]}
