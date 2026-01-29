@@ -4,7 +4,7 @@
     {
       "category": "Start",
       "key": -1,
-      "location": "300 50",
+      "location": "-100.0 50.0",
       "step": "0",
       "text": "Waiting for init",
       "size": ""
@@ -62,7 +62,7 @@
       "key": -8,
       "location": "-100 325",
       "step": "10",
-      "text": "Go to bucket",
+      "text": "Post sorting management",
       "size": ""
     },
     {
@@ -70,7 +70,7 @@
       "key": -11,
       "location": "300 325",
       "step": "20",
-      "text": "Go to bucket",
+      "text": "Post sorting management",
       "size": ""
     },
     {
@@ -78,7 +78,7 @@
       "key": -13,
       "location": "700 325",
       "step": "30",
-      "text": "Go to bucket",
+      "text": "Post sorting management",
       "size": ""
     },
     {
@@ -197,17 +197,17 @@
     {
       "from": -4,
       "to": -5,
-      "text": "Tr2_1.1 : Vision : unmachined"
+      "text": "Tr2_10 : Vision : unmachined"
     },
     {
       "from": -4,
       "to": -6,
-      "text": "Tr2_1.2 : Vision : base"
+      "text": "Tr2_20 : Vision : base"
     },
     {
       "from": -4,
       "to": -7,
-      "text": "Tr2_1.3 : Vision : lid"
+      "text": "Tr2_30 : Vision : lid"
     },
     {
       "from": -8,
@@ -257,35 +257,17 @@
     {
       "from": -17,
       "to": -22,
-      "text": "Tr10_110 :\nPallet Sensor 3"
-    },
-    {
-      "from": -22,
-      "to": -2,
-      "text": "",
-      "category": "Repeat"
-    },
-    {
-      "from": -16,
-      "to": -2,
-      "text": "",
-      "category": "Repeat"
-    },
-    {
-      "from": -18,
-      "to": -2,
-      "text": "",
-      "category": "Repeat"
+      "text": "Tr10_111 :\nPallet Sensor 1"
     },
     {
       "from": -19,
       "to": -23,
-      "text": "c"
+      "text": "Tr20_211 :\nPallet Sensor 2"
     },
     {
       "from": -21,
       "to": -24,
-      "text": "c"
+      "text": "Tr30_311 :\nPallet Sensor 3"
     }
   ]
 }
