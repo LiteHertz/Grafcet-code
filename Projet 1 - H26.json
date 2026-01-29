@@ -108,7 +108,7 @@
     {
       "category": "",
       "key": -16,
-      "location": "-100 425",
+      "location": "-100.0 450.0",
       "step": "100",
       "text": "",
       "size": ""
@@ -116,7 +116,7 @@
     {
       "category": "",
       "key": -17,
-      "location": "50 425",
+      "location": "62.5 450.0",
       "step": "110",
       "text": "",
       "size": ""
@@ -124,7 +124,7 @@
     {
       "category": "",
       "key": -18,
-      "location": "200 425",
+      "location": "225.0 450.0",
       "step": "200",
       "text": "",
       "size": ""
@@ -132,7 +132,7 @@
     {
       "category": "",
       "key": -19,
-      "location": "350 425",
+      "location": "375.0 450.0",
       "step": "210",
       "text": "",
       "size": ""
@@ -140,7 +140,7 @@
     {
       "category": "",
       "key": -20,
-      "location": "550 425",
+      "location": "537.5 450.0",
       "step": "300",
       "text": "",
       "size": ""
@@ -148,7 +148,7 @@
     {
       "category": "",
       "key": -21,
-      "location": "700 425",
+      "location": "700.0 450.0",
       "step": "310",
       "text": "",
       "size": ""
@@ -203,32 +203,32 @@
     {
       "from": -15,
       "to": -16,
-      "text": "Tr10_100 :\nRetroreflective Sensor"
+      "text": "Tr10_100 :\nRetroreflective Sensor\nCTU LT 3"
     },
     {
       "from": -15,
       "to": -17,
-      "text": "Tr10_110 :\nRetroreflective Sensor"
+      "text": "Tr10_110 :\nRetroreflective Sensor\nCTU GT 3"
     },
     {
       "from": -12,
       "to": -18,
-      "text": "Tr20_200 :\nRetroreflective Sensor"
+      "text": "Tr20_200 :\nRetroreflective Sensor\nCTU LT 3"
     },
     {
       "from": -12,
       "to": -19,
-      "text": "Tr20_210 :\nRetroreflective Sensor"
+      "text": "Tr20_210 :\nRetroreflective Sensor\nCTU GT 3"
     },
     {
       "from": -14,
       "to": -20,
-      "text": "Tr30_300 :\nRetroreflective Sensor"
+      "text": "Tr30_300 :\nRetroreflective Sensor\nCTU LT 3"
     },
     {
       "from": -14,
       "to": -21,
-      "text": "Tr30_310 :\nRetroreflective Sensor"
+      "text": "Tr30_310 :\nRetroreflective Sensor\nCTU GT 3"
     }
   ]
 }

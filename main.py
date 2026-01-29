@@ -3,7 +3,7 @@ import os
 import time
 import copy
 import tkinter as tk
-from tkinter import ttk, messagebox, simpledialog
+from tkinter import ttk, messagebox, simpledialog, filedialog
 
 JSON_PATH = os.path.join(os.path.dirname(__file__), "Projet 1 - H26.json")
 POLL_INTERVAL_MS = 1000
@@ -55,6 +55,14 @@ class GrafcetEditor(tk.Tk):
         pan.add(left, weight=1)
         pan.add(right, weight=3)
 
+        # Top: file selector
+        top_frame = ttk.Frame(right)
+        top_frame.pack(fill=tk.X, padx=8, pady=4)
+        ttk.Label(top_frame, text="File:", font=(None, 10)).pack(side=tk.LEFT)
+        self.file_label = ttk.Label(top_frame, text=os.path.basename(self.json_path), foreground="blue")
+        self.file_label.pack(side=tk.LEFT, padx=4)
+        ttk.Button(top_frame, text="Browse", command=self.browse_file).pack(side=tk.LEFT)
+
         # Tabs for nodes/links
         tabs = ttk.Notebook(left)
         tabs.pack(fill=tk.BOTH, expand=True)
@@ -65,7 +73,7 @@ class GrafcetEditor(tk.Tk):
         tabs.add(self.link_tab, text="Links")
 
         # Node listbox
-        self.node_list = tk.Listbox(self.node_tab)
+        self.node_list = tk.Listbox(self.node_tab, selectmode=tk.MULTIPLE)
         self.node_list.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
         self.node_list.bind("<<ListboxSelect>>", self.on_node_select)
         nb = ttk.Frame(self.node_tab)
@@ -74,6 +82,21 @@ class GrafcetEditor(tk.Tk):
         ttk.Button(nb, text="Del", command=self.delete_node).pack(fill=tk.X)
         ttk.Button(nb, text="Move Up", command=lambda: self.move_item(self.node_list, -1)).pack(fill=tk.X)
         ttk.Button(nb, text="Move Down", command=lambda: self.move_item(self.node_list, 1)).pack(fill=tk.X)
+        
+        # Offset controls for selected nodes
+        ttk.Separator(nb, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=8)
+        ttk.Label(nb, text="Offset (sel.)", font=(None, 9)).pack(anchor=tk.W, padx=4)
+        offset_frame = ttk.Frame(nb)
+        offset_frame.pack(fill=tk.X, padx=4)
+        ttk.Label(offset_frame, text="X:").pack(side=tk.LEFT)
+        self.offset_x = ttk.Entry(offset_frame, width=6)
+        self.offset_x.pack(side=tk.LEFT, padx=2)
+        self.offset_x.insert(0, "0")
+        ttk.Label(offset_frame, text="Y:").pack(side=tk.LEFT)
+        self.offset_y = ttk.Entry(offset_frame, width=6)
+        self.offset_y.pack(side=tk.LEFT, padx=2)
+        self.offset_y.insert(0, "0")
+        ttk.Button(nb, text="Apply Offset", command=self.apply_offset).pack(fill=tk.X, padx=4, pady=4)
 
         # Link listbox
         self.link_list = tk.Listbox(self.link_tab)
@@ -96,6 +119,27 @@ class GrafcetEditor(tk.Tk):
         self.form_title.pack(anchor=tk.W)
         self.form_area = ttk.Frame(form)
         self.form_area.pack(fill=tk.BOTH, expand=True)
+
+        # Raw JSON editor (below the form area)
+        raw_frame = ttk.LabelFrame(form, text="Raw JSON")
+        raw_frame.pack(fill=tk.BOTH, expand=True, pady=6)
+        
+        # Text + scrollbar area
+        text_area = ttk.Frame(raw_frame)
+        text_area.pack(fill=tk.BOTH, expand=True)
+        self.raw_text = tk.Text(text_area, height=12)
+        self.raw_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        raw_scroll = ttk.Scrollbar(text_area, orient=tk.VERTICAL, command=self.raw_text.yview)
+        raw_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        self.raw_text['yscrollcommand'] = raw_scroll.set
+        
+        # Buttons area below text
+        raw_btns = ttk.Frame(raw_frame)
+        raw_btns.pack(fill=tk.X, pady=4)
+        ttk.Button(raw_btns, text="Copy JSON", command=self.copy_json).pack(side=tk.LEFT, padx=2)
+        ttk.Button(raw_btns, text="Apply JSON", command=self.apply_json_textbox).pack(side=tk.LEFT, padx=2)
+        ttk.Button(raw_btns, text="Paste & Apply", command=self.paste_and_apply).pack(side=tk.LEFT, padx=2)
+        ttk.Button(raw_btns, text="Refresh JSON view", command=self.update_json_textbox).pack(side=tk.LEFT, padx=2)
 
         # bottom buttons
         bottom = ttk.Frame(self)
@@ -139,6 +183,7 @@ class GrafcetEditor(tk.Tk):
             self.raw = {"class": "GraphLinksModel", "nodeDataArray": [], "linkDataArray": []}
         self.last_mtime = os.path.getmtime(self.json_path) if os.path.exists(self.json_path) else None
         self.populate_lists()
+        self.update_json_textbox()
         self.set_status(f"Loaded {os.path.basename(self.json_path)}")
         self.modified = False
 
@@ -162,6 +207,7 @@ class GrafcetEditor(tk.Tk):
         sel = self.node_list.curselection()
         if not sel:
             return
+        # For multi-select, only edit the first selected
         idx = sel[0]
         node = self.raw.get('nodeDataArray', [])[idx]
         self.form_title.config(text=f"Edit node #{idx}")
@@ -239,6 +285,7 @@ class GrafcetEditor(tk.Tk):
             arr[idx] = obj
         self.modified = True
         self.populate_lists()
+        self.update_json_textbox()
         self.set_status("Modified (unsaved)")
 
     def add_node(self):
@@ -318,6 +365,7 @@ class GrafcetEditor(tk.Tk):
             self.last_mtime = os.path.getmtime(self.json_path)
             self.modified = False
             self.set_status("Saved")
+            self.update_json_textbox()
         except Exception as e:
             messagebox.showerror("Error", f"Failed to save JSON: {e}")
 
@@ -326,6 +374,102 @@ class GrafcetEditor(tk.Tk):
             if not messagebox.askyesno("Reload", "You have unsaved changes. Reloading will discard them. Continue?"):
                 return
         self.load_json()
+
+    def update_json_textbox(self):
+        try:
+            out = copy.deepcopy(self.raw)
+            out['nodeDataArray'] = [reorder_node(n) for n in out.get('nodeDataArray', [])]
+            out['linkDataArray'] = [reorder_link(l) for l in out.get('linkDataArray', [])]
+            s = json.dumps(out, indent=2, ensure_ascii=False)
+        except Exception as e:
+            s = f"// Error serializing JSON: {e}\n{repr(self.raw)}"
+        self.raw_text.delete('1.0', tk.END)
+        self.raw_text.insert('1.0', s)
+
+    def copy_json(self):
+        self.update_json_textbox()
+        try:
+            self.clipboard_clear()
+            self.clipboard_append(self.raw_text.get('1.0', 'end-1c'))
+            self.set_status("JSON copied to clipboard")
+        except Exception as e:
+            messagebox.showerror("Clipboard", f"Failed to copy to clipboard: {e}")
+
+    def apply_json_textbox(self):
+        txt = self.raw_text.get('1.0', 'end-1c')
+        try:
+            parsed = json.loads(txt)
+        except Exception as e:
+            messagebox.showerror("Invalid JSON", f"Failed to parse JSON: {e}")
+            return
+        self.raw = parsed
+        self.populate_lists()
+        self.modified = True
+        self.set_status("Applied JSON from textbox (unsaved)")
+
+    def paste_and_apply(self):
+        try:
+            txt = self.clipboard_get()
+        except Exception as e:
+            messagebox.showerror("Clipboard", f"Failed to read clipboard: {e}")
+            return
+        try:
+            parsed = json.loads(txt)
+        except Exception as e:
+            messagebox.showerror("Invalid JSON", f"Clipboard does not contain valid JSON: {e}")
+            return
+        self.raw = parsed
+        self.populate_lists()
+        self.update_json_textbox()
+        self.modified = True
+        self.set_status("Applied JSON from clipboard (unsaved)")
+
+    def browse_file(self):
+        path = filedialog.askopenfilename(
+            title="Open JSON file",
+            filetypes=[("JSON files", "*.json"), ("All files", "*.*")],
+            initialdir=os.path.dirname(self.json_path) if os.path.exists(self.json_path) else os.path.expanduser("~")
+        )
+        if path:
+            if self.modified:
+                if not messagebox.askyesno("Unsaved Changes", "You have unsaved changes. Switch file anyway?"):
+                    return
+            self.json_path = path
+            self.file_label.config(text=os.path.basename(self.json_path))
+            self.last_mtime = None
+            self.load_json()
+            self.set_status(f"Switched to {os.path.basename(self.json_path)}")
+
+    def apply_offset(self):
+        sel = self.node_list.curselection()
+        if not sel:
+            messagebox.showwarning("No Selection", "Please select one or more nodes first")
+            return
+        try:
+            ox = float(self.offset_x.get())
+            oy = float(self.offset_y.get())
+        except ValueError:
+            messagebox.showerror("Invalid Input", "X and Y offset must be numbers")
+            return
+        
+        nodes = self.raw.get('nodeDataArray', [])
+        for idx in sel:
+            node = nodes[idx]
+            loc_str = node.get('location', "0 0")
+            try:
+                parts = loc_str.split()
+                x, y = float(parts[0]), float(parts[1])
+                x += ox
+                y += oy
+                node['location'] = f"{x} {y}"
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to parse location for node {idx}: {e}")
+                return
+        
+        self.modified = True
+        self.populate_lists()
+        self.update_json_textbox()
+        self.set_status(f"Applied offset ({ox}, {oy}) to {len(sel)} node(s)")
 
     def poll_file(self):
         try:
