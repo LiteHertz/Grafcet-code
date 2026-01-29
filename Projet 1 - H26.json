@@ -1,27 +1,234 @@
-{ "class": "GraphLinksModel",
+{
+  "class": "GraphLinksModel",
   "nodeDataArray": [
-{"category":"Start","step":"0","text":"Waiting for init","key":-1,"location":"100 50"},
-{"location":"100 100","key":-2,"step":"1","text":"Ok for start"},
-{"location":"100 150","key":-3,"step":"2","text":"Emit part"},
-{"category":"Exclusive","location":"300 200","key":-4,"size":"500 0"},
-{"location":"100 250","key":-5,"text":"| 1.1 |","step":"10"},
-{"location":"300 250","key":-6,"text":"| 1.2 |","step":"20"},
-{"location":"500 250","key":-7,"text":"| 1.3 |","step":"30"},
-{"category":"Start","text":"Go to bucket","step":"10","key":-8,"location":"100 350"},
-{"location":"100 400","key":-9,"step":"11","text":"Counter ++"},
-{"category":"Start","step":"20","text":"Go to bucket","key":-11,"location":"300 350"},
-{"location":"300 400","key":-12,"step":"21","text":"Counter ++"},
-{"category":"Start","step":"30","text":"Go to bucket","key":-13,"location":"500 350"},
-{"location":"500 400","key":-14,"step":"31","text":"Counter ++"}
-],
+    {
+      "category": "Start",
+      "key": -1,
+      "location": "300 50",
+      "step": "0",
+      "text": "Waiting for init",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -2,
+      "location": "300 100",
+      "step": "1",
+      "text": "Ok for start",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -3,
+      "location": "300 150",
+      "step": "2",
+      "text": "Emit part",
+      "size": ""
+    },
+    {
+      "category": "Exclusive",
+      "key": -4,
+      "location": "300 175",
+      "step": "",
+      "text": "",
+      "size": "900 0"
+    },
+    {
+      "category": "",
+      "key": -5,
+      "location": "-100 225",
+      "step": "10",
+      "text": "| 10 |",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -6,
+      "location": "300 225",
+      "step": "20",
+      "text": "| 20 |",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -7,
+      "location": "700 225",
+      "step": "30",
+      "text": "| 30 |",
+      "size": ""
+    },
+    {
+      "category": "Start",
+      "key": -8,
+      "location": "-100 325",
+      "step": "10",
+      "text": "Go to bucket",
+      "size": ""
+    },
+    {
+      "category": "Start",
+      "key": -11,
+      "location": "300 325",
+      "step": "20",
+      "text": "Go to bucket",
+      "size": ""
+    },
+    {
+      "category": "Start",
+      "key": -13,
+      "location": "700 325",
+      "step": "30",
+      "text": "Go to bucket",
+      "size": ""
+    },
+    {
+      "category": "Exclusive",
+      "key": -15,
+      "location": "0 375",
+      "step": "",
+      "text": "",
+      "size": "290 0"
+    },
+    {
+      "category": "Exclusive",
+      "key": -12,
+      "location": "300 375",
+      "step": "",
+      "text": "",
+      "size": "290 0"
+    },
+    {
+      "category": "Exclusive",
+      "key": -14,
+      "location": "600 375",
+      "step": "",
+      "text": "",
+      "size": "290 0"
+    },
+    {
+      "category": "",
+      "key": -16,
+      "location": "-100 425",
+      "step": "100",
+      "text": "",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -17,
+      "location": "50 425",
+      "step": "110",
+      "text": "",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -18,
+      "location": "200 425",
+      "step": "200",
+      "text": "",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -19,
+      "location": "350 425",
+      "step": "210",
+      "text": "",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -20,
+      "location": "550 425",
+      "step": "300",
+      "text": "",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -21,
+      "location": "700 425",
+      "step": "310",
+      "text": "",
+      "size": ""
+    }
+  ],
   "linkDataArray": [
-{"from":-1,"to":-2,"text":"Tr0_1 : Init pressed"},
-{"from":-2,"to":-3,"text":"Tr0_1 : Start pressed"},
-{"from":-3,"to":-4},
-{"from":-4,"to":-5,"text":"Tr2_1.1 : Vision : lid"},
-{"from":-4,"to":-6,"text":"Tr2_1.2 : Vision : lid"},
-{"from":-4,"to":-7,"text":"Tr2_1.3 : Vision : lid"},
-{"from":-8,"to":-9,"text":"Tr10_11 : In bucket"},
-{"from":-11,"to":-12,"text":"Tr20_21 : In bucket"},
-{"from":-13,"to":-14,"text":"Tr30_31 : In bucket"}
-]}
+    {
+      "from": -1,
+      "to": -2,
+      "text": "Tr0_1 : Init pressed"
+    },
+    {
+      "from": -2,
+      "to": -3,
+      "text": "Tr1_2 : Start pressed"
+    },
+    {
+      "from": -3,
+      "to": -4,
+      "text": ""
+    },
+    {
+      "from": -4,
+      "to": -5,
+      "text": "Tr2_1.1 : Vision : unmachined"
+    },
+    {
+      "from": -4,
+      "to": -6,
+      "text": "Tr2_1.2 : Vision : base"
+    },
+    {
+      "from": -4,
+      "to": -7,
+      "text": "Tr2_1.3 : Vision : lid"
+    },
+    {
+      "from": -8,
+      "to": -15,
+      "text": ""
+    },
+    {
+      "from": -11,
+      "to": -12,
+      "text": ""
+    },
+    {
+      "from": -13,
+      "to": -14,
+      "text": ""
+    },
+    {
+      "from": -15,
+      "to": -16,
+      "text": "Tr10_100 :\nRetroreflective Sensor"
+    },
+    {
+      "from": -15,
+      "to": -17,
+      "text": "Tr10_110 :\nRetroreflective Sensor"
+    },
+    {
+      "from": -12,
+      "to": -18,
+      "text": "Tr20_200 :\nRetroreflective Sensor"
+    },
+    {
+      "from": -12,
+      "to": -19,
+      "text": "Tr20_210 :\nRetroreflective Sensor"
+    },
+    {
+      "from": -14,
+      "to": -20,
+      "text": "Tr30_300 :\nRetroreflective Sensor"
+    },
+    {
+      "from": -14,
+      "to": -21,
+      "text": "Tr30_310 :\nRetroreflective Sensor"
+    }
+  ]
+}
