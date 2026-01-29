@@ -72,27 +72,37 @@ class GrafcetEditor(tk.Tk):
         tabs.add(self.node_tab, text="Nodes")
         tabs.add(self.link_tab, text="Links")
 
-        # Node listbox
-        self.node_list = tk.Listbox(self.node_tab, selectmode=tk.MULTIPLE)
-        self.node_list.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+        # Node listbox (EXTENDED so Ctrl/Shift required for multiple selection)
+        self.node_list = tk.Listbox(self.node_tab, selectmode=tk.EXTENDED)
+        self.node_list.pack(fill=tk.BOTH, expand=True)
         self.node_list.bind("<<ListboxSelect>>", self.on_node_select)
+
+        # Bottom controls for node list
         nb = ttk.Frame(self.node_tab)
-        nb.pack(side=tk.RIGHT, fill=tk.Y)
-        ttk.Button(nb, text="Add", command=self.add_node).pack(fill=tk.X)
-        ttk.Button(nb, text="Del", command=self.delete_node).pack(fill=tk.X)
-        ttk.Button(nb, text="Move Up", command=lambda: self.move_item(self.node_list, -1)).pack(fill=tk.X)
-        ttk.Button(nb, text="Move Down", command=lambda: self.move_item(self.node_list, 1)).pack(fill=tk.X)
-        
-        # Offset controls for selected nodes
-        ttk.Separator(nb, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=8)
-        ttk.Label(nb, text="Offset (sel.)", font=(None, 9)).pack(anchor=tk.W, padx=4)
+        nb.pack(side=tk.BOTTOM, fill=tk.X)
+        btn_frame = ttk.Frame(nb)
+        btn_frame.pack(fill=tk.X, padx=4, pady=2)
+        add_btn = ttk.Button(btn_frame, text="Add", command=self.add_node)
+        del_btn = ttk.Button(btn_frame, text="Del", command=self.delete_node)
+        up_btn = ttk.Button(btn_frame, text="Move Up", command=lambda: self.move_item(self.node_list, -1))
+        down_btn = ttk.Button(btn_frame, text="Move Down", command=lambda: self.move_item(self.node_list, 1))
+        add_btn.grid(row=0, column=0, padx=2, pady=2, sticky='nsew')
+        del_btn.grid(row=0, column=1, padx=2, pady=2, sticky='nsew')
+        up_btn.grid(row=1, column=0, padx=2, pady=2, sticky='nsew')
+        down_btn.grid(row=1, column=1, padx=2, pady=2, sticky='nsew')
+        btn_frame.columnconfigure(0, weight=1)
+        btn_frame.columnconfigure(1, weight=1)
+
+        # Offset controls for selected nodes (below the buttons)
+        ttk.Separator(nb, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=4)
         offset_frame = ttk.Frame(nb)
-        offset_frame.pack(fill=tk.X, padx=4)
-        ttk.Label(offset_frame, text="X:").pack(side=tk.LEFT)
+        offset_frame.pack(fill=tk.X, padx=4, pady=2)
+        ttk.Label(offset_frame, text="Offset (sel.):").pack(side=tk.LEFT)
+        ttk.Label(offset_frame, text="X:").pack(side=tk.LEFT, padx=(8,0))
         self.offset_x = ttk.Entry(offset_frame, width=6)
         self.offset_x.pack(side=tk.LEFT, padx=2)
         self.offset_x.insert(0, "0")
-        ttk.Label(offset_frame, text="Y:").pack(side=tk.LEFT)
+        ttk.Label(offset_frame, text="Y:").pack(side=tk.LEFT, padx=(8,0))
         self.offset_y = ttk.Entry(offset_frame, width=6)
         self.offset_y.pack(side=tk.LEFT, padx=2)
         self.offset_y.insert(0, "0")
@@ -100,14 +110,24 @@ class GrafcetEditor(tk.Tk):
 
         # Link listbox
         self.link_list = tk.Listbox(self.link_tab)
-        self.link_list.pack(fill=tk.BOTH, expand=True, side=tk.LEFT)
+        self.link_list.pack(fill=tk.BOTH, expand=True)
         self.link_list.bind("<<ListboxSelect>>", self.on_link_select)
+
+        # Bottom controls for link list
         lb = ttk.Frame(self.link_tab)
-        lb.pack(side=tk.RIGHT, fill=tk.Y)
-        ttk.Button(lb, text="Add", command=self.add_link).pack(fill=tk.X)
-        ttk.Button(lb, text="Del", command=self.delete_link).pack(fill=tk.X)
-        ttk.Button(lb, text="Move Up", command=lambda: self.move_item(self.link_list, -1)).pack(fill=tk.X)
-        ttk.Button(lb, text="Move Down", command=lambda: self.move_item(self.link_list, 1)).pack(fill=tk.X)
+        lb.pack(side=tk.BOTTOM, fill=tk.X)
+        lbtns = ttk.Frame(lb)
+        lbtns.pack(fill=tk.X, padx=4, pady=2)
+        ladd = ttk.Button(lbtns, text="Add", command=self.add_link)
+        ldel = ttk.Button(lbtns, text="Del", command=self.delete_link)
+        lup = ttk.Button(lbtns, text="Move Up", command=lambda: self.move_item(self.link_list, -1))
+        ldown = ttk.Button(lbtns, text="Move Down", command=lambda: self.move_item(self.link_list, 1))
+        ladd.grid(row=0, column=0, padx=2, pady=2, sticky='nsew')
+        ldel.grid(row=0, column=1, padx=2, pady=2, sticky='nsew')
+        lup.grid(row=1, column=0, padx=2, pady=2, sticky='nsew')
+        ldown.grid(row=1, column=1, padx=2, pady=2, sticky='nsew')
+        lbtns.columnconfigure(0, weight=1)
+        lbtns.columnconfigure(1, weight=1)
 
         # Right: detail editor
         form = ttk.Frame(right)
@@ -148,6 +168,8 @@ class GrafcetEditor(tk.Tk):
         ttk.Button(bottom, text="Reload from file", command=self.manual_reload).pack(side=tk.RIGHT, padx=4, pady=4)
         self.status = ttk.Label(bottom, text="Idle")
         self.status.pack(side=tk.LEFT)
+        self.sync_label = ttk.Label(bottom, text="", foreground="green")
+        self.sync_label.pack(side=tk.LEFT, padx=8)
 
     def clear_form(self):
         for w in self.form_area.winfo_children():
@@ -185,6 +207,7 @@ class GrafcetEditor(tk.Tk):
         self.populate_lists()
         self.update_json_textbox()
         self.set_status(f"Loaded {os.path.basename(self.json_path)}")
+        self.update_sync_indicator()
         self.modified = False
 
     def populate_lists(self):
@@ -194,19 +217,45 @@ class GrafcetEditor(tk.Tk):
         links = self.raw.get('linkDataArray', [])
         for i, n in enumerate(nodes):
             category = n.get('category', "")
-            label = n.get('text') or n.get('step') or n.get('category') or str(n.get('key', i))
-            prefix = f"[{category}] " if category else ""
-            self.node_list.insert(tk.END, f"{i}: {prefix}{label}")
+            step = n.get('step', "")
+            text_lines = (n.get('text') or "").splitlines()
+            text = text_lines[0] if text_lines else ""
+            title_parts = []
+            if category:
+                title_parts.append(f"{category}")
+            if step:
+                title_parts.append(f"{step}")
+            if text:
+                title_parts.append(f"{text}")
+            title = " | ".join(title_parts) if title_parts else str(n.get('key', i))
+            self.node_list.insert(tk.END, f"{i}: {title}")
         for i, l in enumerate(links):
-            label = l.get('text') or f"{l.get('from')}→{l.get('to')}"
             cat = l.get('category', "")
-            prefix = f"[{cat}] " if cat else ""
-            self.link_list.insert(tk.END, f"{i}: {prefix}{label}")
+            frm = l.get('from', "")
+            to = l.get('to', "")
+            text = l.get('text', "")
+            title_parts = []
+            if cat:
+                title_parts.append(f"{cat}")
+            if frm or to:
+                title_parts.append(f"{frm}→{to}")
+            if text:
+                title_parts.append(text.splitlines()[0])
+            title = " | ".join(title_parts) if title_parts else str(i)
+            self.link_list.insert(tk.END, f"{i}: {title}")
+        self.update_sync_indicator()
 
     def on_node_select(self, evt):
         sel = self.node_list.curselection()
         if not sel:
             return
+        # If previous current node was deselected, save its fields
+        prev = getattr(self, 'current', None)
+        if prev and prev[0] == 'node' and prev[1] not in sel:
+            try:
+                self.apply_fields()
+            except Exception:
+                pass
         # For multi-select, only edit the first selected
         idx = sel[0]
         node = self.raw.get('nodeDataArray', [])[idx]
@@ -229,6 +278,12 @@ class GrafcetEditor(tk.Tk):
         sel = self.link_list.curselection()
         if not sel:
             return
+        prev = getattr(self, 'current', None)
+        if prev and prev[0] == 'link' and prev[1] not in sel:
+            try:
+                self.apply_fields()
+            except Exception:
+                pass
         idx = sel[0]
         link = self.raw.get('linkDataArray', [])[idx]
         self.form_title.config(text=f"Edit link #{idx}")
@@ -287,6 +342,7 @@ class GrafcetEditor(tk.Tk):
         self.populate_lists()
         self.update_json_textbox()
         self.set_status("Modified (unsaved)")
+        self.update_sync_indicator()
 
     def add_node(self):
         nodes = self.raw.setdefault('nodeDataArray', [])
@@ -366,6 +422,7 @@ class GrafcetEditor(tk.Tk):
             self.modified = False
             self.set_status("Saved")
             self.update_json_textbox()
+            self.update_sync_indicator()
         except Exception as e:
             messagebox.showerror("Error", f"Failed to save JSON: {e}")
 
@@ -385,6 +442,37 @@ class GrafcetEditor(tk.Tk):
             s = f"// Error serializing JSON: {e}\n{repr(self.raw)}"
         self.raw_text.delete('1.0', tk.END)
         self.raw_text.insert('1.0', s)
+        self.update_sync_indicator()
+
+    def serialized_current(self):
+        out = copy.deepcopy(self.raw)
+        out['nodeDataArray'] = [reorder_node(n) for n in out.get('nodeDataArray', [])]
+        out['linkDataArray'] = [reorder_link(l) for l in out.get('linkDataArray', [])]
+        try:
+            return json.dumps(out, indent=2, ensure_ascii=False)
+        except Exception:
+            return None
+
+    def update_sync_indicator(self):
+        s = self.serialized_current()
+        file_s = None
+        try:
+            if os.path.exists(self.json_path):
+                with open(self.json_path, 'r', encoding='utf-8') as f:
+                    file_s = f.read()
+        except Exception:
+            file_s = None
+        if self.modified:
+            self.sync_label.config(text="Unsaved changes", foreground="orange")
+        else:
+            if s is None:
+                self.sync_label.config(text="Invalid JSON", foreground="red")
+            else:
+                # normalize newlines for comparison
+                if file_s is not None and file_s.strip() == s.strip():
+                    self.sync_label.config(text="In sync with file", foreground="green")
+                else:
+                    self.sync_label.config(text="Different from file", foreground="red")
 
     def copy_json(self):
         self.update_json_textbox()
@@ -406,6 +494,7 @@ class GrafcetEditor(tk.Tk):
         self.populate_lists()
         self.modified = True
         self.set_status("Applied JSON from textbox (unsaved)")
+        self.update_sync_indicator()
 
     def paste_and_apply(self):
         try:
@@ -423,6 +512,7 @@ class GrafcetEditor(tk.Tk):
         self.update_json_textbox()
         self.modified = True
         self.set_status("Applied JSON from clipboard (unsaved)")
+        self.update_sync_indicator()
 
     def browse_file(self):
         path = filedialog.askopenfilename(
@@ -470,6 +560,7 @@ class GrafcetEditor(tk.Tk):
         self.populate_lists()
         self.update_json_textbox()
         self.set_status(f"Applied offset ({ox}, {oy}) to {len(sel)} node(s)")
+        self.update_sync_indicator()
 
     def poll_file(self):
         try:
@@ -492,6 +583,12 @@ class GrafcetEditor(tk.Tk):
                 self.set_status("JSON file not found")
         except Exception as e:
             print("Poll error:", e)
+        finally:
+            # keep sync indicator fresh
+            try:
+                self.update_sync_indicator()
+            except Exception:
+                pass
         self.after(POLL_INTERVAL_MS, self.poll_file)
 
 

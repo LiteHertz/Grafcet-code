@@ -12,7 +12,7 @@
     {
       "category": "",
       "key": -2,
-      "location": "300 100",
+      "location": "-100.0 100.0",
       "step": "1",
       "text": "Ok for start",
       "size": ""
@@ -20,7 +20,7 @@
     {
       "category": "",
       "key": -3,
-      "location": "300 150",
+      "location": "-100.0 150.0",
       "step": "2",
       "text": "Emit part",
       "size": ""
@@ -110,7 +110,7 @@
       "key": -16,
       "location": "-100.0 450.0",
       "step": "100",
-      "text": "",
+      "text": "CTU ++",
       "size": ""
     },
     {
@@ -118,7 +118,7 @@
       "key": -17,
       "location": "62.5 450.0",
       "step": "110",
-      "text": "",
+      "text": "CTU RESET",
       "size": ""
     },
     {
@@ -126,7 +126,7 @@
       "key": -18,
       "location": "225.0 450.0",
       "step": "200",
-      "text": "",
+      "text": "CTU ++",
       "size": ""
     },
     {
@@ -134,7 +134,7 @@
       "key": -19,
       "location": "375.0 450.0",
       "step": "210",
-      "text": "",
+      "text": "CTU RESET",
       "size": ""
     },
     {
@@ -142,7 +142,7 @@
       "key": -20,
       "location": "537.5 450.0",
       "step": "300",
-      "text": "",
+      "text": "CTU ++",
       "size": ""
     },
     {
@@ -150,7 +150,31 @@
       "key": -21,
       "location": "700.0 450.0",
       "step": "310",
-      "text": "",
+      "text": "CTU RESET",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -22,
+      "location": "62.5 525",
+      "step": "111",
+      "text": "Remove Box",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -23,
+      "location": "375 525",
+      "step": "211",
+      "text": "Remove Box",
+      "size": ""
+    },
+    {
+      "category": "",
+      "key": -24,
+      "location": "700 525",
+      "step": "311",
+      "text": "Remove Box",
       "size": ""
     }
   ],
@@ -229,6 +253,39 @@
       "from": -14,
       "to": -21,
       "text": "Tr30_310 :\nRetroreflective Sensor\nCTU GT 3"
+    },
+    {
+      "from": -17,
+      "to": -22,
+      "text": "Tr10_110 :\nPallet Sensor 3"
+    },
+    {
+      "from": -22,
+      "to": -2,
+      "text": "",
+      "category": "Repeat"
+    },
+    {
+      "from": -16,
+      "to": -2,
+      "text": "",
+      "category": "Repeat"
+    },
+    {
+      "from": -18,
+      "to": -2,
+      "text": "",
+      "category": "Repeat"
+    },
+    {
+      "from": -19,
+      "to": -23,
+      "text": "c"
+    },
+    {
+      "from": -21,
+      "to": -24,
+      "text": "c"
     }
   ]
 }
