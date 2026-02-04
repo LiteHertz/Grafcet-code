@@ -2,14 +2,6 @@
 <html lang="en">
 <body>
 <script src="https://cdn.jsdelivr.net/npm/gojs@3.1.4/release/go-debug.js"></script>
-<p>
-  This is a minimalist HTML and JavaScript skeleton of the GoJS Sample
-  <a href="https://gojs.net/latest/samples/grafcet.html">grafcet.html</a>. It was automatically generated from a button on the sample page,
-  and does not contain the full HTML. It is intended as a starting point to adapt for your own usage.
-  For many samples, you may need to inspect the
-  <a href="https://github.com/NorthwoodsSoftware/GoJS/blob/master/samples/grafcet.html">full source on Github</a>
-  and copy other files or scripts.
-</p>
 <div id="allSampleContent" class="p-4 w-full">
           
             
@@ -531,16 +523,7 @@
 </script>
 
 <div id="sample">
-  <div id="myDiagramDiv" style="border: solid 1px black; width: 800px; height: 600px"></div>
-  <p>A grafcet diagram is similar to a <a href="sequentialFunction.html">sequential function chart</a>.</p>
-  <p>
-    All the <a>TextBlock</a>s in this sample are editable on double click.
-  </p>
-  <p>
-    Select a Node to show a list of Buttons that enable creating new Nodes or drawing new Links. These buttons are defined as an adornment that is used in a
-    common <a>Part.selectionAdornmentTemplate</a>. This diagram uses many custom functions, including an overridden <a>LinkingTool</a> and a special Link class,
-    <b>BarLink</b>.
-  </p>
+  <div id="myDiagramDiv" style="border: solid 1px black; width: 100%; height: 600PX"></div>
   <div id="buttons">
     <button id="saveModel" onclick="save()">Save</button>
     <button id="loadModel" onclick="load()">Load</button>
