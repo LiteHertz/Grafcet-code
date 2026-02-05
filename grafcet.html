@@ -529,55 +529,7 @@
     <button id="loadModel" onclick="load()">Load</button>
     Diagram Model saved in JSON format:
   </div>
-  <textarea id="mySavedModel" style="width: 100%; height: 300px">{ "class": "go.GraphLinksModel",
-  "nodeDataArray": [
-{"key":1, "category":"Start", "location":"300 50", "step":"1", "text":"Action 1"},
-{"key":2, "category":"Parallel", "location":"300 100"},
-{"key":3, "location":"225 125", "step":"3", "text":"Action 2"},
-{"key":4, "location":"325 150", "step":"4", "text":"Action 3"},
-{"key":5, "location":"225 175", "step":"5", "text":"Action 4"},
-{"key":6, "category":"Parallel", "location":"300 200"},
-{"key":7, "location":"300 250", "step":"7", "text":"Action 6"},
-{"key":11, "category":"Start", "location":"300 350", "step":"11", "text":"Action 1"},
-{"key":12, "category":"Exclusive", "location":"300 400"},
-{"key":13, "location":"225 450", "step":"13", "text":"Action 2"},
-{"key":14, "location":"325 475", "step":"14", "text":"Action 3"},
-{"key":15, "location":"225 500", "step":"15", "text":"Action 4"},
-{"key":16, "category":"Exclusive", "location":"300 550"},
-{"key":17, "location":"300 600", "step":"17", "text":"Action 6"},
-{"key":21, "location":"500 50", "step":"21", "text":"Act 1"},
-{"key":22, "location":"500 100", "step":"22", "text":"Act 2"},
-{"key":23, "location":"500 150", "step":"23", "text":"Act 3"},
-{"key":24, "location":"500 200", "step":"24", "text":"Act 4"},
-{"key":31, "location":"500 400", "step":"31", "text":"Act 1"},
-{"key":32, "location":"500 450", "step":"32", "text":"Act 2"},
-{"key":33, "location":"500 500", "step":"33", "text":"Act 3"},
-{"key":34, "location":"500 550", "step":"34", "text":"Act 4"}
- ],
-  "linkDataArray": [
-{"from":1, "to":2, "text":"condition 1"},
-{"from":2, "to":3},
-{"from":2, "to":4},
-{"from":3, "to":5, "text":"condition 2"},
-{"from":4, "to":6},
-{"from":5, "to":6},
-{"from":6, "to":7, "text":"condition 5"},
-{"from":11, "to":12, "text":"condition 1"},
-{"from":12, "to":13, "text":"condition 12"},
-{"from":12, "to":14, "text":"condition 13"},
-{"from":13, "to":15, "text":"condition 2"},
-{"from":14, "to":16, "text":"condition 14"},
-{"from":15, "to":16, "text":"condition 15"},
-{"from":16, "to":17, "text":"condition 5"},
-{"from":21, "to":22, "text":"c1"},
-{"from":22, "to":23, "text":"c2"},
-{"from":23, "to":24, "text":"c3"},
-{"from":21, "to":24, "text":"c14", "category":"Skip"},
-{"from":31, "to":32, "text":"c1"},
-{"from":32, "to":33, "text":"c2"},
-{"from":33, "to":34, "text":"c3"},
-{"from":33, "to":32, "text":"c14", "category":"Repeat"}
- ]}
+  <textarea id="mySavedModel" style="width: 100%; height: 300px">
   </textarea>
 </div>
 
